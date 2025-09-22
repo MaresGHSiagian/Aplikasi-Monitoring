@@ -40,7 +40,7 @@ export default function AuthenticatedLayout({ header, children }) {
     // Add "Pekerjaan" menu - Exclude Asisten Proses
     if (user.role === "manager" || user.role === "askep") {
         menuItems.push({
-            name: "Pekerjaan (Approve Only)",
+            name: "Approved Pekerjaan",
             href: "/jobs",
             icon: (
                 <svg
