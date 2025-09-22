@@ -76,8 +76,8 @@ brew install php
 ### Option A: Clone dari GitHub
 
 ```cmd
-git clone [URL-REPOSITORY-GITHUB]
-cd Monitor-Bengkel
+git clone https://github.com/MaresGHSiagian/Aplikasi-Monitoring.git
+cd Aplikasi-Monitoring
 ```
 
 ### Option B: Download ZIP

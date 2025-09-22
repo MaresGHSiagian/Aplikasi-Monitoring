@@ -30,8 +30,8 @@ Aplikasi Monitor Bengkel adalah sistem manajemen bengkel modern yang memungkinka
 
 ```cmd
 # Clone repository
-git clone [repository-url]
-cd Monitor-Bengkel
+git clone https://github.com/MaresGHSiagian/Aplikasi-Monitoring.git
+cd Aplikasi-Monitoring
 
 # Setup environment
 copy .env.example .env
@@ -140,11 +140,3 @@ Jika Anda mengalami masalah atau memiliki pertanyaan:
 1. Baca [Panduan Instalasi Lengkap](README_INSTALASI_LENGKAP.md)
 2. Periksa section [Troubleshooting](README_INSTALASI_LENGKAP.md#troubleshooting)
 3. Buat issue baru di GitHub repository ini
-
-## 📄 License
-
-Aplikasi ini menggunakan [MIT License](https://opensource.org/licenses/MIT).
-
----
-
-**Happy Coding! 🎉**
