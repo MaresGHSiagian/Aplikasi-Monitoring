@@ -68,6 +68,7 @@ brew install php
 ### D. Install PostgreSQL dan pgAdmin
 
 **PostgreSQL Database Server:**
+
 1. Download PostgreSQL dari https://www.postgresql.org/download/
 2. Pilih versi 12 atau lebih baru
 3. Install dengan pengaturan default
@@ -75,6 +76,7 @@ brew install php
 5. Verifikasi instalasi: `psql --version`
 
 **pgAdmin 4 (Database Management Tool):**
+
 1. pgAdmin biasanya sudah terinstall bersamaan dengan PostgreSQL
 2. Jika belum ada, download dari https://www.pgadmin.org/download/
 3. Install dan buka pgAdmin
@@ -137,36 +139,39 @@ cd Aplikasi-Monitoring
 ### A. Buat Database Baru di pgAdmin
 
 1. **Buka pgAdmin 4:**
-   - Buka aplikasi pgAdmin dari Start Menu
-   - Masukkan master password yang Anda buat saat instalasi
+
+    - Buka aplikasi pgAdmin dari Start Menu
+    - Masukkan master password yang Anda buat saat instalasi
 
 2. **Connect ke PostgreSQL Server:**
-   - Expand "Servers" di panel kiri
-   - Klik pada "PostgreSQL 15" (atau versi yang terinstall)
-   - Masukkan password user `postgres`
+
+    - Expand "Servers" di panel kiri
+    - Klik pada "PostgreSQL 15" (atau versi yang terinstall)
+    - Masukkan password user `postgres`
 
 3. **Buat Database Baru:**
-   - Klik kanan pada "Databases"
-   - Pilih "Create" → "Database..."
-   - **Database name**: `monitor_bengkel`
-   - **Owner**: `postgres`
-   - Klik "Save"
+    - Klik kanan pada "Databases"
+    - Pilih "Create" → "Database..."
+    - **Database name**: `monitor_bengkel`
+    - **Owner**: `postgres`
+    - Klik "Save"
 
 ### B. Konfigurasi Koneksi Database di Laravel
 
 1. **Edit file `.env`** dan ubah konfigurasi database:
-   ```
-   DB_CONNECTION=pgsql
-   DB_HOST=127.0.0.1
-   DB_PORT=5432
-   DB_DATABASE=monitor_bengkel
-   DB_USERNAME=postgres
-   DB_PASSWORD=[password-postgres-anda]
-   ```
+
+    ```
+    DB_CONNECTION=pgsql
+    DB_HOST=127.0.0.1
+    DB_PORT=5432
+    DB_DATABASE=monitor_bengkel
+    DB_USERNAME=postgres
+    DB_PASSWORD=[password-postgres-anda]
+    ```
 
 2. **Pastikan extension PostgreSQL aktif di PHP:**
-   - Jika menggunakan XAMPP/Laragon, aktifkan `php_pdo_pgsql` di php.ini
-   - Restart Apache/web server
+    - Jika menggunakan XAMPP/Laragon, aktifkan `php_pdo_pgsql` di php.ini
+    - Restart Apache/web server
 
 ## 📱 Langkah 5: Instalasi Dependencies
 
@@ -251,16 +256,19 @@ npm install
 ### Database Connection Error
 
 **Error: "could not find driver" (PostgreSQL)**
+
 1. Pastikan PostgreSQL driver terinstall di PHP
 2. Edit `php.ini` dan uncomment: `extension=pdo_pgsql`
 3. Restart web server (Apache/Nginx)
 
 **Error: "Connection refused"**
+
 1. Pastikan PostgreSQL service berjalan
 2. Cek di Services Windows: `postgresql-x64-15` harus Running
 3. Verifikasi port 5432 tidak diblokir firewall
 
 **Error: "database does not exist"**
+
 1. Pastikan database `monitor_bengkel` sudah dibuat di pgAdmin
 2. Cek konfigurasi `.env` sudah benar
 3. Test koneksi: `php artisan migrate:status`
@@ -281,15 +289,17 @@ npm install
 ### PostgreSQL dengan pgAdmin
 
 **Menggunakan pgAdmin:**
+
 1. **Melihat data tabel**: Klik Database → monitor_bengkel → Schemas → Tables
 2. **Query manual**: Tools → Query Tool
 3. **Backup database**: Klik kanan database → Backup
 4. **Restore database**: Klik kanan database → Restore
 
 **Default Login Aplikasi:**
-- **Email**: admin@example.com  
-- **Password**: password
-- **Role**: Admin
+
+-   **Email**: admin@example.com
+-   **Password**: password
+-   **Role**: Admin
 
 ## 📚 Informasi Tambahan
 
@@ -309,6 +319,7 @@ Monitor Bengkel/
 ### Perintah Berguna
 
 **Test koneksi database:**
+
 ```cmd
 php artisan migrate:status
 ```
