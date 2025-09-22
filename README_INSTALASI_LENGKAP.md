@@ -324,9 +324,9 @@ Kemudian di dalam tinker:
 ```php
 use App\Models\User;
 User::create([
-    'name' => 'Admin',
-    'email' => 'admin@example.com',
-    'password' => bcrypt('password'),
+    'name' => 'manager',
+    'email' => 'manager@bengkel.com',
+    'password' => bcrypt('manager123'),
     'role' => 'admin'
 ]);
 exit;
