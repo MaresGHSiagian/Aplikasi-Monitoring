@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         // Create Manager User
         User::create([
             'name' => 'Manager Bengkel',
-            'email' => 'manager@bengkel.com',
+            'email' => 'manager@gmail.com',
             'password' => bcrypt('manager123'),
             'role' => 'manager',
             'email_verified_at' => now(),
@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
         // Create Askep User
         User::create([
             'name' => 'Asisten Kepala',
-            'email' => 'askep@bengkel.com',
+            'email' => 'asistenkepala@gmail.com',
             'password' => bcrypt('askep123'),
             'role' => 'askep',
             'email_verified_at' => now(),
@@ -43,7 +43,7 @@ class DatabaseSeeder extends Seeder
         // Create Asisten Proses User
         User::create([
             'name' => 'Asisten Proses',
-            'email' => 'asisten.proses@bengkel.com',
+            'email' => 'asisten.proses@gmailcom',
             'password' => bcrypt('asistenproses123'),
             'role' => 'asisten_proses',
             'email_verified_at' => now(),
