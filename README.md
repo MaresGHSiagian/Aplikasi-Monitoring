@@ -4,7 +4,7 @@
   <img src="https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel">
   <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React">
   <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS">
-  <img src="https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white" alt="SQLite">
+  <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL">
 </p>
 
 Aplikasi Monitor Bengkel adalah sistem manajemen bengkel modern yang memungkinkan Anda untuk mengelola pekerjaan bengkel, laporan kerusakan, dan monitoring aktivitas bengkel dengan mudah.
@@ -24,6 +24,8 @@ Aplikasi Monitor Bengkel adalah sistem manajemen bengkel modern yang memungkinka
 -   PHP 8.2+
 -   Composer
 -   Node.js 18+
+-   PostgreSQL 12+
+-   pgAdmin 4
 -   Git
 
 ### Langkah Instalasi
@@ -41,8 +43,9 @@ php artisan key:generate
 composer install
 npm install
 
-# Setup database
-type nul > database\database.sqlite
+# Setup database PostgreSQL (lihat panduan lengkap untuk detail)
+# Buat database 'monitor_bengkel' di pgAdmin
+# Update konfigurasi database di file .env
 php artisan migrate --seed
 
 # Jalankan aplikasi (2 Command Prompt)
@@ -62,7 +65,7 @@ Untuk panduan step-by-step yang detail dan mudah dipahami untuk pemula, silakan 
 -   **Backend**: Laravel 12 (PHP Framework)
 -   **Frontend**: React 18 dengan Inertia.js
 -   **Styling**: Tailwind CSS
--   **Database**: SQLite (default), MySQL/PostgreSQL (opsional)
+-   **Database**: PostgreSQL dengan pgAdmin 4
 -   **Build Tool**: Vite
 -   **Authentication**: Laravel Sanctum
 
@@ -77,7 +80,7 @@ Monitor Bengkel/
 ├── database/
 │   ├── migrations/         # Migrasi database
 │   ├── seeders/           # Data awal database
-│   └── database.sqlite    # File database SQLite
+│   └── factories/         # Factory untuk testing data
 ├── resources/
 │   ├── js/                # React components dan pages
 │   └── views/             # Blade templates
