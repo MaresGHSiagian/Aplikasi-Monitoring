@@ -114,6 +114,15 @@ class User extends Authenticatable
     }
 
     /**
+     * Check if user is admin (for user management).
+     * All roles except karyawan can manage users.
+     */
+    public function isAdmin()
+    {
+        return !$this->isKaryawan();
+    }
+
+    /**
      * Check if user can create jobs for karyawan.
      * Only Asisten Bengkel can create and start jobs for karyawan.
      */

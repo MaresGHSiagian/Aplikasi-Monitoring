@@ -41,6 +41,9 @@ class BengkelJobController extends Controller
                 'completed_by' => $job->completedBy ? $job->completedBy->name : null,
                 'reviewed_at' => $job->reviewed_at ? $job->reviewed_at->format('Y-m-d H:i:s') : null,
                 'reviewed_by' => $job->reviewedBy ? $job->reviewedBy->name : null,
+                // Informasi lewat waktu untuk job yang sudah diapprove
+                'is_approved_overdue' => $job->is_approved_overdue,
+                'approved_overdue_duration' => $job->approved_overdue_duration,
                 'can_be_completed' => $job->canBeCompleted(),
                 'can_be_resubmitted' => $job->canBeResubmitted(),
                 'is_waiting_approval' => $job->isWaitingApproval(),
@@ -158,6 +161,9 @@ class BengkelJobController extends Controller
                     'name' => $job->reviewedBy->name,
                     'role' => $job->reviewedBy->role,
                 ] : null,
+                // Informasi lewat waktu untuk job yang sudah diapprove
+                'is_approved_overdue' => $job->is_approved_overdue,
+                'approved_overdue_duration' => $job->approved_overdue_duration,
                 // Flags untuk UI
                 'can_be_completed' => $job->canBeCompleted(),
                 'can_be_resubmitted' => $job->canBeResubmitted(),

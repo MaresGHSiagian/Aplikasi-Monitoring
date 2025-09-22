@@ -445,13 +445,24 @@ export default function JobsIndex({ jobs = [], filters = {}, stats = {} }) {
                                                         </div>
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap">
-                                                        <span
-                                                            className={`px-2 py-1 text-xs font-semibold rounded-full text-white ${getStatusColor(
-                                                                job.status
-                                                            )}`}
-                                                        >
-                                                            {job.status}
-                                                        </span>
+                                                        <div className="flex flex-col gap-1">
+                                                            <span
+                                                                className={`px-2 py-1 text-xs font-semibold rounded-full text-white ${getStatusColor(
+                                                                    job.status
+                                                                )}`}
+                                                            >
+                                                                {job.status}
+                                                            </span>
+                                                            {/* Indikator Lewat Waktu untuk Job Selesai */}
+                                                            {job.is_approved_overdue &&
+                                                                job.status ===
+                                                                    "Selesai" && (
+                                                                    <span className="px-2 py-1 text-xs font-medium rounded-full bg-orange-100 text-orange-800">
+                                                                        ⚠ Lewat
+                                                                        Waktu
+                                                                    </span>
+                                                                )}
+                                                        </div>
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap">
                                                         <div className="text-sm text-gray-900">

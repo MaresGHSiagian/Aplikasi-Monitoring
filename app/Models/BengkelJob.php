@@ -93,6 +93,34 @@ class BengkelJob extends Model
     }
 
     /**
+     * Check if approved job was completed after deadline
+     */
+    public function getIsApprovedOverdueAttribute()
+    {
+        // Only check for completed jobs that have been approved
+        if ($this->status !== 'Selesai' || !$this->waktu_mulai || !$this->reviewed_at) {
+            return false;
+        }
+
+        $endTime = $this->waktu_mulai->addMinutes($this->estimasi_menit);
+        // Check if the job was completed after the estimated end time
+        return $this->reviewed_at->greaterThan($endTime);
+    }
+
+    /**
+     * Get overdue duration in minutes for approved jobs
+     */
+    public function getApprovedOverdueDurationAttribute()
+    {
+        if (!$this->is_approved_overdue) {
+            return 0;
+        }
+
+        $endTime = $this->waktu_mulai->addMinutes($this->estimasi_menit);
+        return $this->reviewed_at->diffInMinutes($endTime);
+    }
+
+    /**
      * Start the job
      */
     public function start()

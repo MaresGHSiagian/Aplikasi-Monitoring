@@ -1,7 +1,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 
-export default function ShowUser({ user }) {
+export default function Show({ user }) {
     const getRoleColor = (role) => {
         const colors = {
             manager: "bg-red-600",

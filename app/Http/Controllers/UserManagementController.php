@@ -17,20 +17,58 @@ class UserManagementController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::latest()->get()->map(function ($user) {
-            return [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'role' => $user->role,
-                'created_at' => $user->created_at->format('Y-m-d H:i:s'),
-            ];
-        });
+        $perPage = $request->input('per_page', 10); // Default 10 items per page
+        $search = $request->input('search');
+        $role = $request->input('role');
+
+        $query = User::query();
+
+        // Search functionality
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter by role
+        if ($role && $role !== 'all') {
+            $query->where('role', $role);
+        }
+
+        $users = $query->latest()
+            ->paginate($perPage)
+            ->withQueryString()
+            ->through(function ($user) {
+                return [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'role' => $user->role,
+                    'created_at' => $user->created_at->format('d M Y, H:i'),
+                ];
+            });
+
+        // Get role statistics
+        $roleStats = [
+            'all' => User::count(),
+            'manager' => User::where('role', 'manager')->count(),
+            'askep' => User::where('role', 'askep')->count(),
+            'asisten_bengkel' => User::where('role', 'asisten_bengkel')->count(),
+            'asisten_proses' => User::where('role', 'asisten_proses')->count(),
+            'karyawan' => User::where('role', 'karyawan')->count(),
+        ];
 
         return Inertia::render('Users/Index', [
-            'users' => $users
+            'users' => $users,
+            'filters' => [
+                'search' => $search,
+                'role' => $role,
+                'per_page' => $perPage,
+            ],
+            'roleStats' => $roleStats,
         ]);
     }
 
