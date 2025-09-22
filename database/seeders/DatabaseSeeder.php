@@ -43,7 +43,7 @@ class DatabaseSeeder extends Seeder
         // Create Asisten Proses User
         User::create([
             'name' => 'Asisten Proses',
-            'email' => 'asisten.proses@gmailcom',
+            'email' => 'asisten.proses@gmail.com',
             'password' => bcrypt('asistenproses123'),
             'role' => 'asisten_proses',
             'email_verified_at' => now(),
