@@ -126,9 +126,8 @@ export default function ShowJob({ job }) {
                                     </span>
                                 </div>
                                 <div className="flex gap-2">
-                                    {(user.role === "manager" ||
-                                        user.role === "askep" ||
-                                        user.role === "asisten_bengkel") &&
+                                    {/* Only Asisten Bengkel can Edit */}
+                                    {user.role === "asisten_bengkel" &&
                                         job.status !== "Selesai" && (
                                             <a
                                                 href={`/jobs/${job.id}/edit`}
@@ -438,7 +437,7 @@ export default function ShowJob({ job }) {
                                         </>
                                     )}
 
-                                    {/* Management Approval Actions */}
+                                    {/* Management Approval Actions - Manager, Askep, Asisten Bengkel */}
                                     {(user.role === "manager" ||
                                         user.role === "askep" ||
                                         user.role === "asisten_bengkel") && (
@@ -470,16 +469,17 @@ export default function ShowJob({ job }) {
                                     {user.role === "karyawan" && (
                                         <>
                                             {(job.can_be_completed ||
-                                                job.can_be_resubmitted) && (
-                                                <a
-                                                    href={`/jobs/${job.id}/complete-form`}
-                                                    className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                                >
-                                                    {job.can_be_resubmitted
-                                                        ? "Submit Ulang"
-                                                        : "Selesaikan Pekerjaan"}
-                                                </a>
-                                            )}
+                                                job.can_be_resubmitted) &&
+                                                job.can_be_accessed_by_current_user && (
+                                                    <a
+                                                        href={`/jobs/${job.id}/complete-form`}
+                                                        className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                                    >
+                                                        {job.can_be_resubmitted
+                                                            ? "Submit Ulang"
+                                                            : "Selesaikan Pekerjaan"}
+                                                    </a>
+                                                )}
                                         </>
                                     )}
                                 </div>

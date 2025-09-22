@@ -162,6 +162,9 @@ class BengkelJobController extends Controller
                 'can_be_completed' => $job->canBeCompleted(),
                 'can_be_resubmitted' => $job->canBeResubmitted(),
                 'is_waiting_approval' => $job->isWaitingApproval(),
+                'can_be_accessed_by_current_user' => auth()->user()->isKaryawan() 
+                    ? $job->canBeAccessedByKaryawan(auth()->user()->name) 
+                    : true, // Non-karyawan always have access
             ]
         ]);
     }
@@ -171,9 +174,9 @@ class BengkelJobController extends Controller
      */
     public function edit(BengkelJob $job)
     {
-        // Hanya management yang bisa mengedit pekerjaan
-        if (!auth()->user()->isManagement() && !auth()->user()->isAsistenBengkel()) {
-            abort(403, 'Hanya management dan asisten bengkel yang dapat mengedit pekerjaan.');
+        // Hanya asisten bengkel yang bisa mengedit pekerjaan
+        if (!auth()->user()->isAsistenBengkel()) {
+            abort(403, 'Hanya asisten bengkel yang dapat mengedit pekerjaan.');
         }
 
         $mechanics = \App\Models\User::where('role', 'karyawan')
@@ -200,9 +203,9 @@ class BengkelJobController extends Controller
      */
     public function update(Request $request, BengkelJob $job)
     {
-        // Hanya management yang bisa mengedit pekerjaan
-        if (!auth()->user()->isManagement() && !auth()->user()->isAsistenBengkel()) {
-            abort(403, 'Hanya management dan asisten bengkel yang dapat mengedit pekerjaan.');
+        // Hanya asisten bengkel yang bisa mengedit pekerjaan
+        if (!auth()->user()->isAsistenBengkel()) {
+            abort(403, 'Hanya asisten bengkel yang dapat mengedit pekerjaan.');
         }
 
         $request->validate([
@@ -227,9 +230,9 @@ class BengkelJobController extends Controller
      */
     public function destroy(BengkelJob $job)
     {
-        // Hanya management yang bisa menghapus pekerjaan
-        if (!auth()->user()->isManagement() && !auth()->user()->isAsistenBengkel()) {
-            abort(403, 'Hanya management dan asisten bengkel yang dapat menghapus pekerjaan.');
+        // Hanya asisten bengkel yang bisa menghapus pekerjaan
+        if (!auth()->user()->isAsistenBengkel()) {
+            abort(403, 'Hanya asisten bengkel yang dapat menghapus pekerjaan.');
         }
 
         $job->delete();
@@ -308,9 +311,15 @@ class BengkelJobController extends Controller
             $job->markAsOverdue();
         }
 
-        // Get all active jobs for dashboard
-        $jobs = BengkelJob::whereIn('status', ['Belum Mulai', 'Proses', 'Lewat Waktu'])
-            ->latest()
+        // Get active jobs for dashboard based on user role
+        $query = BengkelJob::whereIn('status', ['Belum Mulai', 'Proses', 'Lewat Waktu']);
+        
+        // If user is karyawan, only show their own jobs
+        if (auth()->user()->isKaryawan()) {
+            $query->where('mekanik', auth()->user()->name);
+        }
+        
+        $jobs = $query->latest()
             ->get()
             ->map(function ($job) {
                 return [

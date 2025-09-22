@@ -478,13 +478,9 @@ export default function JobsIndex({ jobs = [], filters = {}, stats = {} }) {
                                                                 Detail
                                                             </a>
 
-                                                            {/* Manager, Askep & Asisten Bengkel Actions */}
-                                                            {(user.role ===
-                                                                "manager" ||
-                                                                user.role ===
-                                                                    "askep" ||
-                                                                user.role ===
-                                                                    "asisten_bengkel") &&
+                                                            {/* Only Asisten Bengkel can Edit/Delete */}
+                                                            {user.role ===
+                                                                "asisten_bengkel" &&
                                                                 job.status !==
                                                                     "Selesai" && (
                                                                     <>
