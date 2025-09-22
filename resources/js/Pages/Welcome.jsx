@@ -18,7 +18,7 @@ export default function Welcome({ auth }) {
 
     return (
         <>
-            <Head title="Monitor Bengkel - Sistem Monitoring Pekerjaan Bengkel" />
+            <Head title="Monitor Bengkel" />
 
             {/* Hero Section */}
             <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 relative overflow-hidden">

@@ -28,10 +28,10 @@ class JobManagementMiddleware
             return $next($request);
         }
 
-        // Only allow management and asisten bengkel to create, edit, delete, START jobs
-        $managementOnlyActions = ['jobs.create', 'jobs.store', 'jobs.edit', 'jobs.update', 'jobs.destroy', 'jobs.start'];
-        if (in_array($routeName, $managementOnlyActions) && !$user->isManagement() && !$user->isAsistenBengkel()) {
-            abort(403, 'Access denied. Only management and asisten bengkel can create, edit, delete, or start jobs.');
+        // Only allow asisten bengkel to create, edit, delete, START jobs
+        $asistenBengkelOnlyActions = ['jobs.create', 'jobs.store', 'jobs.edit', 'jobs.update', 'jobs.destroy', 'jobs.start'];
+        if (in_array($routeName, $asistenBengkelOnlyActions) && !$user->isAsistenBengkel()) {
+            abort(403, 'Access denied. Only asisten bengkel can create, edit, delete, or start jobs.');
         }
 
         // Allow job completion for both admin and karyawan (with different logic in controller)

@@ -186,7 +186,9 @@ export default function Dashboard({
                             {jobs.length === 0 ? (
                                 <div className="text-center py-8">
                                     <p className="text-gray-500">
-                                        Belum ada pekerjaan aktif
+                                        {user.role === "karyawan"
+                                            ? "Belum ada pekerjaan aktif untuk Anda"
+                                            : "Belum ada pekerjaan aktif"}
                                     </p>
                                 </div>
                             ) : (

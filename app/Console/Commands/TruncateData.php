@@ -38,41 +38,73 @@ class TruncateData extends Command
         $this->info('Mulai mengosongkan data...');
 
         try {
-            // Nonaktifkan foreign key checks sementara
-            DB::statement('PRAGMA foreign_keys = OFF'); // Untuk SQLite
+            // Deteksi database driver
+            $driver = DB::getDriverName();
+            
+            // Nonaktifkan foreign key checks berdasarkan driver
+            if ($driver === 'mysql') {
+                DB::statement('SET FOREIGN_KEY_CHECKS=0');
+            } elseif ($driver === 'sqlite') {
+                DB::statement('PRAGMA foreign_keys = OFF');
+            }
+            // PostgreSQL tidak perlu disable foreign key untuk truncate cascade
             
             // Truncate tabel bengkel_jobs
             if (DB::getSchemaBuilder()->hasTable('bengkel_jobs')) {
-                DB::table('bengkel_jobs')->truncate();
+                if ($driver === 'pgsql') {
+                    DB::statement('TRUNCATE TABLE bengkel_jobs RESTART IDENTITY CASCADE');
+                } else {
+                    DB::table('bengkel_jobs')->truncate();
+                }
                 $this->line('✓ Tabel bengkel_jobs dikosongkan');
             }
 
             // Truncate tabel damage_reports  
             if (DB::getSchemaBuilder()->hasTable('damage_reports')) {
-                DB::table('damage_reports')->truncate();
+                if ($driver === 'pgsql') {
+                    DB::statement('TRUNCATE TABLE damage_reports RESTART IDENTITY CASCADE');
+                } else {
+                    DB::table('damage_reports')->truncate();
+                }
                 $this->line('✓ Tabel damage_reports dikosongkan');
             }
 
             // Truncate tabel jobs (Laravel queue jobs)
             if (DB::getSchemaBuilder()->hasTable('jobs')) {
-                DB::table('jobs')->truncate();
+                if ($driver === 'pgsql') {
+                    DB::statement('TRUNCATE TABLE jobs RESTART IDENTITY CASCADE');
+                } else {
+                    DB::table('jobs')->truncate();
+                }
                 $this->line('✓ Tabel jobs dikosongkan');
             }
 
             // Truncate tabel failed_jobs
             if (DB::getSchemaBuilder()->hasTable('failed_jobs')) {
-                DB::table('failed_jobs')->truncate();
+                if ($driver === 'pgsql') {
+                    DB::statement('TRUNCATE TABLE failed_jobs RESTART IDENTITY CASCADE');
+                } else {
+                    DB::table('failed_jobs')->truncate();
+                }
                 $this->line('✓ Tabel failed_jobs dikosongkan');
             }
 
             // Truncate tabel sessions (opsional)
             if (DB::getSchemaBuilder()->hasTable('sessions')) {
-                DB::table('sessions')->truncate();
+                if ($driver === 'pgsql') {
+                    DB::statement('TRUNCATE TABLE sessions RESTART IDENTITY CASCADE');
+                } else {
+                    DB::table('sessions')->truncate();
+                }
                 $this->line('✓ Tabel sessions dikosongkan');
             }
 
-            // Aktifkan kembali foreign key checks
-            DB::statement('PRAGMA foreign_keys = ON'); // Untuk SQLite
+            // Aktifkan kembali foreign key checks berdasarkan driver
+            if ($driver === 'mysql') {
+                DB::statement('SET FOREIGN_KEY_CHECKS=1');
+            } elseif ($driver === 'sqlite') {
+                DB::statement('PRAGMA foreign_keys = ON');
+            }
 
             $this->newLine();
             $this->info('✅ Semua data berhasil dikosongkan!');
